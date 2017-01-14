@@ -1,0 +1,8 @@
+rekognize, What do you see?
+rekognize, What do you recognize?
+rekognize, What is in this picture?
+rekognize, What is in this image?
+help, What can i do?
+help, Can you help me?
+find, Do you have pictures of
+find, Show me a picture of
