@@ -42,7 +42,7 @@ import java.util.List;
 
 public class Test2BagOfWords {
 
-    private BagOfWordsVectorizer createBowVectorizer() {
+    private BagOfWordsVectorizer createBowVectorizer() throws IOException {
         TokenizerFactory t = new DefaultTokenizerFactory();
         t.setTokenPreProcessor(new CommonPreprocessor());
 
@@ -69,7 +69,7 @@ public class Test2BagOfWords {
         {
             info(String.format("%d = %s", word.getIndex(), word.getWord()));
         }
-
+        return bowv;
     }
 
     @Test
@@ -95,7 +95,8 @@ public class Test2BagOfWords {
             DataSet ds = bowv.vectorize(sentence, label);
             datasets.add(ds);
         }
-//        info(words.toString());
+        info(String.format("label names: %s", datasets.get(0).getLabelNamesList()));
+
 
         /*
          * Build net model
@@ -133,7 +134,7 @@ public class Test2BagOfWords {
         net.init();
         net.setListeners(new ScoreIterationListener(100));
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 50; i++) {
             for (DataSet ds : datasets) {
                 net.fit(ds);
             }
@@ -171,7 +172,9 @@ public class Test2BagOfWords {
          */
         BagOfWordsVectorizer bowv = createBowVectorizer();
 
-        //Load the model
+        /*
+         * Load the model
+         */
         File locationToSave = new File("c:/temp/bow-net.zip");      //Where to save the network. Note: the file is in .zip format - can be opened externally
         MultiLayerNetwork restored = ModelSerializer.restoreMultiLayerNetwork(locationToSave);
 
@@ -182,15 +185,46 @@ public class Test2BagOfWords {
         LabelAwareListSentenceIterator iter = new LabelAwareListSentenceIterator(resource.getInputStream(), ",");
 
         iter.reset();
+        info(String.format("CurrentLabels: %s", iter.currentLabels()));
+
         while (iter.hasNext()) {
             String sentence = iter.nextSentence();
             String label = iter.currentLabel();
             info(String.format("Testing %s = %s", sentence, label));
+            DataSet ds = bowv.vectorize(sentence, label);
+            info(String.format("Sentence vector: %s", sentence));
+            info(String.format("Label vector: %s", label));
+            int[] result = restored.predict(ds.getFeatures());
+            info(String.format("result: %d", result[0]));
+            info(String.format("%s", Arrays.toString(result)));
 
         }
 
 
     }
+
+    @Test
+    public void test2UseBagOfWords() throws IOException {
+
+        /*
+         * Use training set vectorizer
+         */
+        BagOfWordsVectorizer bowv = createBowVectorizer();
+
+        /*
+         * Load the model
+         */
+        File locationToSave = new File("c:/temp/bow-net.zip");      //Where to save the network. Note: the file is in .zip format - can be opened externally
+        MultiLayerNetwork restored = ModelSerializer.restoreMultiLayerNetwork(locationToSave);
+
+        /*
+         * Some tests
+         */
+        String s1 = "Can you tell me how to use this?";
+        info(String.format("%s - %d", s1, restored.predict(bowv.transform(s1))[0]));
+
+    }
+
 
     private void info(String a) {
         System.out.println(a);
