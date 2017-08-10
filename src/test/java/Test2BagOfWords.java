@@ -1,5 +1,3 @@
-import org.apache.uima.resource.ResourceInitializationException;
-import org.canova.nlp.tokenization.tokenizerfactory.UimaTokenizerFactory;
 import org.datavec.api.util.ClassPathResource;
 import org.deeplearning4j.bagofwords.vectorizer.BagOfWordsVectorizer;
 import org.deeplearning4j.eval.Evaluation;
@@ -14,8 +12,6 @@ import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
-import org.deeplearning4j.text.sentenceiterator.BasicLineIterator;
-import org.deeplearning4j.text.sentenceiterator.SentenceIterator;
 import org.deeplearning4j.text.sentenceiterator.labelaware.LabelAwareListSentenceIterator;
 import org.deeplearning4j.text.tokenization.tokenizer.preprocessor.CommonPreprocessor;
 import org.deeplearning4j.text.tokenization.tokenizerfactory.DefaultTokenizerFactory;
@@ -25,11 +21,9 @@ import org.junit.Test;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.api.DataSet;
-import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,7 +67,7 @@ public class Test2BagOfWords {
     }
 
     @Test
-    public void testTrainBagOfWords() throws ResourceInitializationException, IOException {
+    public void testTrainBagOfWords() throws IOException {
 
         BagOfWordsVectorizer bowv = createBowVectorizer();
         INDArray ar = bowv.transform("What do you see?");

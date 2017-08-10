@@ -1,0 +1,17 @@
+apply plugin: 'idea'
+//and standard one
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.deeplearning4j:deeplearning4j-core:0.8.0"
+    compile "org.deeplearning4j:deeplearning4j-nlp:0.8.0"
+    compile 'org.nd4j:nd4j-native-platform:0.8.0'
+    compile 'org.datavec:datavec-api:0.8.0'
+    compile 'org.datavec:datavec-data:0.8.0'
+    compile "org.slf4j:slf4j-simple:1.7.25"
+    compile "org.slf4j:slf4j-api:1.7.25"
+}

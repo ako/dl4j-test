@@ -1,31 +1,23 @@
-import org.canova.api.conf.Configuration;
-import org.canova.api.records.reader.RecordReader;
-import org.canova.api.records.reader.impl.FileRecordReader;
-import org.canova.nd4j.nlp.vectorizer.TfidfVectorizer;
-import org.deeplearning4j.api.storage.StatsStorage;
+import org.datavec.api.conf.Configuration;
 import org.deeplearning4j.eval.Evaluation;
-import org.deeplearning4j.nn.api.Layer;
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
-import org.deeplearning4j.nn.conf.Updater;
 import org.deeplearning4j.nn.conf.distribution.UniformDistribution;
 import org.deeplearning4j.nn.conf.layers.DenseLayer;
 import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
-import org.deeplearning4j.ui.api.UIServer;
-import org.deeplearning4j.ui.stats.StatsListener;
-import org.deeplearning4j.ui.storage.InMemoryStatsStorage;
 import org.junit.Test;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.factory.Nd4j;
-import org.nd4j.linalg.lossfunctions.LossFunctions;
 
 import java.util.Arrays;
+
+//import org.datavec.nlp.vectorizer.TfidfVectorizer;
 
 /**
  * Created by ako on 1/8/2017.
@@ -36,12 +28,12 @@ public class Test1Xor {
     public void firstTest() {
         info("firstTest");
         Configuration config = new Configuration();
-        TfidfVectorizer vectorizer = new TfidfVectorizer();
-        vectorizer.initialize(config);
-        RecordReader reader = new FileRecordReader();
-        INDArray n = vectorizer.fitTransform(reader);
-        info(String.format("n: %s", n));
-    }
+//        TfidfVectorizer vectorizer = new TfidfVectorizer();
+//        vectorizer.initialize(config);
+//        RecordReader reader = new FileRecordReader();
+//        INDArray n = vectorizer.fitTransform(reader);
+//        info(String.format("n: %s", n));
+   }
 
     private void info(String msg) {
         System.out.println(msg);
